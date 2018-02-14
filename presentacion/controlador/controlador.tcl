@@ -1,5 +1,4 @@
 source negocio/negocioTopologia.tcl
-source presentacion/controlador/controladorS.tcl
 
 oo::class create controlador {
     constructor {} {

@@ -13,14 +13,25 @@ oo::class create negocioTopologia {
 		if {$listInterface} {
 			return 0
 		} else {
-			$daoTopologia addBridge $bridge
-			return 1
+			set result [$daoTopologia addBridge $bridge]
+			
+			if {$result == 1} {
+				$daoTopologia upElement $bridge
+			}
+			
+			return $result
 		}
 	}
 	
 	method addInterface {interface} {
 		my variable daoTopologia
-		return [$daoTopologia addInterface $interface]
+		set result [$daoTopologia addInterface $interface]
+		
+		if {$result == 1} {
+			$daoTopologia upElement $interface
+		}
+		
+		return $result
 	}
 	
 	method addVlink {from to} {

@@ -1,69 +1,71 @@
 source negocio/negocioTopologia.tcl
 
 oo::class create controlador {
-    constructor {} {
-		my variable negocioTopologia
-		set negocioTopologia [negocioTopologia new]
-    }
+  constructor {} {
+    my variable negocioTopologia
+    set negocioTopologia [negocioTopologia new]
+  }
 
-    method action {event data} {
-		global S
-		my variable negocioTopologia
+  method action {event data} {
+    global S
+    my variable negocioTopologia
 
-		switch $event {
-			SA_addBridge {
-				set result [$negocioTopologia addBridge $data]
-				if {$result == 1} {
-					puts "Agregado con exito el bridge"
-				} else {
-					puts "No se ha podido agregar el bridge"
-				}
-			}
-			SA_addInterface {
-				set result [$negocioTopologia addInterface $data]
-				if {$result == 1} {
-					puts "Agregado con exito el interfaz"
-				} else {
-					puts "No se ha podido agregar el interfaz"
-				}
-			}
-			SA_delBridge {
-				set result [$negocioTopologia delBridge $data]
-				if {$result == 1} {
-					puts "Eliminado con exito el bridge"
-				} else {
-					puts "No se ha podido eliminar el bridge"
-				}
-			}
-			SA_delInterface {
-				set result [$negocioTopologia delInterface $data]
-				if {$result == 1} {
-					puts "Eliminado con exito el interfaz"
-				} else {
-					puts "No se ha podido eliminar el interfaz"
-				}
-			}
-			SA_addVlink {
-				upvar $data val
-				set result [$negocioTopologia addVlink $val(from) $val(to)]
-				if {$result == 1} {
-					puts "Creado con exito enlace"
-				} else {
-					puts "No se ha podido crear el enlace"
-				}
-			}
-			SA_delVlink {
-				set result [$negocioTopologia delVlink $data]
-				if {$result == 1} {
-					puts "Eliminado con exito enlace"
-				} else {
-					puts "No se ha podido eliminar el enlace"
-				}
-			}
-			default {
-				puts "evento por defecto: $evento"
-			}
-		}
+    switch $event {
+      SA_addBridge {
+	set result [$negocioTopologia addBridge $data]
+	return $result
+      }
+      SA_addInterface {
+	set result [$negocioTopologia addInterface $data]
+	return $result
+      }
+      SA_addPort {
+	upvar $data val
+	set result [$negocioTopologia addPort $val(from) $val(to)]
+	return $result
+      }
+      SA_addVlink {
+	upvar $data val
+	set result [$negocioTopologia addVlink $val(from) $val(to)]
+	return $result
+      }
+      SA_delBridge {
+	set result [$negocioTopologia delBridge $data]
+	return $result
+      }
+      SA_delInterface {
+	set result [$negocioTopologia delInterface $data]
+	return $result
+      }
+      SA_delPort {
+	upvar $data val
+	set result [$negocioTopologia delPort $val(from) $val(to)]
+	return $result
+      }
+      SA_delVlink {
+	set result [$negocioTopologia delVlink $data]
+	return $result
+      }
+      SA_showInfo {
+	set result [$negocioTopologia showInfo]
+	return $result
+      }
+      SA_saveTopology {
+	set result [$negocioTopologia saveTopology $data]
+	return $result
+      }
+      SA_loadTopology {
+	set result [$negocioTopologia loadTopology $data]
+	return $result
+      }
+      SA_cleanTopology {
+	set result [$negocioTopologia cleanTopology]
+	return $result
+      }
+      default {
+	puts "evento por defecto: $event"
+      }
     }
+  }
 }
 

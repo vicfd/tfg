@@ -1,78 +1,78 @@
-source integracion/daoTopologia.tcl
+source dataAccess/dao_topology.tcl
 
-oo::class create negocioTopologia {
+oo::class create businessTopology {
   constructor {} {
-    my variable daoTopologia
-    set daoTopologia [daoTopologia new]
+    my variable daoTopology
+    set daoTopology [daoTopology new]
   }
 
   method addBridge {bridge} {
-    my variable daoTopologia
+    my variable daoTopology
 
-    set result [$daoTopologia addBridge $bridge]
+    set result [$daoTopology addBridge $bridge]
     
     if {$result == 1} {
-      $daoTopologia upElement $bridge
+      $daoTopology upElement $bridge
     }
     
     return $result
   }
 	  
   method addInterface {interface} {
-    my variable daoTopologia
-    set result [$daoTopologia addInterface $interface]
+    my variable daoTopology
+    set result [$daoTopology addInterface $interface]
     
     if {$result == 1} {
-      $daoTopologia upElement $interface
+      $daoTopology upElement $interface
     }
     
     return $result
   }
   
   method addPort {from to} {
-    my variable daoTopologia
-    set result [$daoTopologia addPort $from $to]
+    my variable daoTopology
+    set result [$daoTopology addPort $from $to]
     
     return $result
   }
 
   method addVlink {from to} {
-    my variable daoTopologia
-    set result [$daoTopologia addVlink $from $to]
+    my variable daoTopology
+    set result [$daoTopology addVlink $from $to]
     
     if {$result == 1} {
-      $daoTopologia upElement $from
-      $daoTopologia upElement $to
+      $daoTopology upElement $from
+      $daoTopology upElement $to
     }
     
     return $result
   }	
 
   method delBridge {bridge} {
-    my variable daoTopologia
-    return [$daoTopologia delBridge $bridge]
+    my variable daoTopology
+    return [$daoTopology delBridge $bridge]
   }
 
   method delInterface {interface} {
-    my variable daoTopologia
-    return [$daoTopologia delInterface $interface]
+    my variable daoTopology
+    return [$daoTopology delInterface $interface]
   }
   
   method delPort {from to} {
-    my variable daoTopologia
-    set result [$daoTopologia delPort $from $to]
+    my variable daoTopology
+    set result [$daoTopology delPort $from $to]
     
     return $result
   }
 
   method delVlink {from} {
-    my variable daoTopologia
-    return [$daoTopologia delVlink $from]
+    my variable daoTopology
+    return [$daoTopology delVlink $from]
   }
   
   method showInfo {} {
-    my variable daoTopologia
-    set bridges [$daoTopologia listBr]
+    my variable daoTopology
+    set bridges [$daoTopology listBr]
     set result ""
     set first 1
     
@@ -84,7 +84,7 @@ oo::class create negocioTopologia {
 	set result [append result "\n" $bridge ":"]
       }
       
-      set ports [$daoTopologia listPort $bridge]
+      set ports [$daoTopology listPort $bridge]
       
       foreach port $ports {
 	set result [append result " " $port]
@@ -98,8 +98,8 @@ oo::class create negocioTopologia {
     set result 0
     
     if {[string length $fileName] != 0} {
-      my variable daoTopologia
-      set bridges [$daoTopologia listBr]
+      my variable daoTopology
+      set bridges [$daoTopology listBr]
       set save ""
       set first 1
       set result 1
@@ -112,15 +112,15 @@ oo::class create negocioTopologia {
 	  set save [append save "\n" "1 $bridge"]
 	}
 	
-	set ports [$daoTopologia listPort $bridge]
+	set ports [$daoTopology listPort $bridge]
 	
 	foreach port $ports {
-	  set status [$daoTopologia getInterfaceStatus $port]
+	  set status [$daoTopology getInterfaceStatus $port]
 
 	  if {[string first tun $status] != -1} {
 	    set save [append save "\n" "2 $port"]
 	  } elseif {[string first veth $status] != -1} {
-	    set vlinks [$daoTopologia getVethConnection $port]
+	    set vlinks [$daoTopology getVethConnection $port]
 	    set vlinks [split $vlinks "@"]
 	    set save [append save "\n" "3"]
 	    
@@ -131,7 +131,7 @@ oo::class create negocioTopologia {
 	}
       }
       
-      $daoTopologia saveTopology $fileName $save
+      $daoTopology saveTopology $fileName $save
     }
       
     return $result
@@ -141,8 +141,8 @@ oo::class create negocioTopologia {
     set send 0
     
     if {[string length $fileName] != 0} {
-      my variable daoTopologia
-      set file [$daoTopologia loadTopology]
+      my variable daoTopology
+      set file [$daoTopology loadTopology]
       set send 1
       set bridge ""
 
@@ -159,30 +159,30 @@ oo::class create negocioTopologia {
 	    set command $item
 	  } elseif {$command == 1} {
 	    set bridge $item
-	    set result [$daoTopologia addBridge $bridge]
+	    set result [$daoTopology addBridge $bridge]
 	    
 	    if {$result == 1} {
-	      $daoTopologia upElement $bridge
+	      $daoTopology upElement $bridge
 	    }
 	  } elseif {$command == 2} {
-	    set result [$daoTopologia addInterface $item]
+	    set result [$daoTopology addInterface $item]
 	    
 	    if {$result == 1} {
-	      $daoTopologia upElement $item
-	      $daoTopologia addPort $bridge $item
+	      $daoTopology upElement $item
+	      $daoTopology addPort $bridge $item
 	    }
 	  } elseif {$command == 3} {
 	    if {$aux == 1} {
 	      set aux $item
 	    } else {
-	      set result [$daoTopologia addVlink $aux $item]
+	      set result [$daoTopology addVlink $aux $item]
 	      
 	      if {$result == 1} {
-		$daoTopologia upElement $aux
-		$daoTopologia upElement $item
+		$daoTopology upElement $aux
+		$daoTopology upElement $item
 	      }
 	      
-	      $daoTopologia addPort $bridge $aux
+	      $daoTopology addPort $bridge $aux
 	    }
 	  }
 	}
@@ -193,23 +193,23 @@ oo::class create negocioTopologia {
   }
   
   method cleanTopology {} {
-    my variable daoTopologia
-    set bridges [$daoTopologia listBr]
+    my variable daoTopology
+    set bridges [$daoTopology listBr]
     set result 1
     
     foreach bridge $bridges {
-      set ports [$daoTopologia listPort $bridge]
+      set ports [$daoTopology listPort $bridge]
       
       foreach port $ports {
-	set status [$daoTopologia getInterfaceStatus $port]
-	$daoTopologia delInterface $port
+	set status [$daoTopology getInterfaceStatus $port]
+	$daoTopology delInterface $port
 	if {[string first tun $status] != -1} {
-	  $daoTopologia delInterface $port
+	  $daoTopology delInterface $port
 	} elseif {[string first veth $status] != -1} {
-	  $daoTopologia delVlink $port
+	  $daoTopology delVlink $port
 	}
       }
-      $daoTopologia delBridge $bridge
+      $daoTopology delBridge $bridge
     }
   }
 }

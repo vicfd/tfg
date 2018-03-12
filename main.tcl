@@ -1,8 +1,8 @@
 #! /usr/bin/wish
 
-source presentacion/controlador/controlador.tcl
-source presentacion/controlador/vista.tcl
+source presentation/controller/controller.tcl
+source presentation/views/view_main.tcl
 
-set controlador [controlador new]
+set controller [controller new]
 
 init

@@ -1,4 +1,4 @@
-oo::class create daoTopologia {
+oo::class create daoTopology {
   method addBridge {bridge} {
     if {[catch {exec sudo ovs-vsctl add-br $bridge} errmsg]} {
 	    puts "$errmsg"

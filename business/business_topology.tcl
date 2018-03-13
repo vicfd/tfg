@@ -131,6 +131,8 @@ oo::class create businessTopology {
 	    foreach vlink $vlinks {
 	      set save [append save $vlink " "]
 	    }
+	  } else {
+	    set save [append save "\n" "4 $port"]
 	  }
 	}
       }
@@ -185,6 +187,8 @@ oo::class create businessTopology {
 	      
 	      $daoTopology addPort $bridge $aux
 	    }
+	  } elseif {$command == 4} {
+	    $daoTopology addPort $bridge $item
 	  }
 	}
       }

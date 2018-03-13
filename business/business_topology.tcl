@@ -1,9 +1,12 @@
 source dataAccess/dao_topology.tcl
+source dataAccess/dao_file.tcl
 
 oo::class create businessTopology {
   constructor {} {
     my variable daoTopology
+    my variable daoFile
     set daoTopology [daoTopology new]
+    set daoFile [daoFile new]
   }
 
   method addBridge {bridge} {
@@ -99,6 +102,7 @@ oo::class create businessTopology {
     
     if {[string length $fileName] != 0} {
       my variable daoTopology
+      my variable daoFile
       set bridges [$daoTopology listBr]
       set save ""
       set first 1
@@ -131,7 +135,7 @@ oo::class create businessTopology {
 	}
       }
       
-      $daoTopology saveTopology $fileName $save
+      $daoFile saveTopology $fileName $save
     }
       
     return $result
@@ -142,13 +146,10 @@ oo::class create businessTopology {
     
     if {[string length $fileName] != 0} {
       my variable daoTopology
-      set file [$daoTopology loadTopology]
+      my variable daoFile
+      set file_data [$daoFile loadTopology $fileName]
       set send 1
       set bridge ""
-
-      set fp [open $fileName r]
-      set file_data [read $fp]
-      close $fp
       
       set data [split $file_data "\n"]
       foreach line $data {

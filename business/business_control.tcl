@@ -3,7 +3,9 @@ source dataAccess/dao_control.tcl
 oo::class create businessControl {
   constructor {} {
     my variable daoControl
+    my variable daoFile
     set daoControl [daoControl new]
+    set daoFile [daoFile new]
   }
 
   method addFlow {bridge flow} {
@@ -29,13 +31,14 @@ oo::class create businessControl {
   
   method saveFlows {bridge fileName} {
     my variable daoControl
-
+    my variable daoFile
+  
     set result [$daoControl showFlows $bridge]
     
     if {$result == 0} {
       set result 0
     } else {
-      $daoControl saveFlows $result $fileName
+      $daoFile saveFlows $result $fileName
       set result 1
     }
     

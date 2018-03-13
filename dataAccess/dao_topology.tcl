@@ -86,38 +86,4 @@ oo::class create daoTopology {
   method existInterface {interface} {
     return [exec scripts/existInterface.sh $interface]
   }
-
-  # guardar list-br
-  # ip tuntap son volatiles
-  method saveTopology {fileName save} {
-    exec rm -rf save/$fileName
-    exec mkdir save/$fileName
-    set data [open save/$fileName/save.ncovs w]
-    puts $data $save
-    close $data
-  }
-
-  # cargamos 
-  # sudo ovs-vsctl get interface uml1_2 status si no es tun no se carga
-  method loadTopology {} {
-      puts "test"
-  }
-
-  # obtenemos list br, y las interfaces y las borramos, (las que estan actualmente)
-  # sudo ovs-vsctl get interface uml1_2 status si no es tun no se carga
-  method cleanTopology {} {
-      puts "test"
-  }
-
-  # borrar no es necesario
-  method updateTopology {} {
-      puts "test"
-  }
-
-  #lista de bridges
-  # br1: uml1.0 uml2.0
-  # br2: uml1.1 uml2.1
-  method windowsShowsInfo {} {
-      puts "test"
-  }
 }

@@ -27,14 +27,6 @@ oo::class create daoControl {
     return $result
   }
   
-  method saveFlows {data fileName} {
-    if {[catch {exec echo $data > $fileName.ncovs} errmsg]} {
-      puts "$errmsg"
-      return 0
-    }
-    return 1
-  }
-  
   method loadFlows {bridge fileName} {
     if {[catch {exec sudo ovs-ofctl add-flows $bridge $fileName} errmsg]} {
 	    puts "$errmsg"

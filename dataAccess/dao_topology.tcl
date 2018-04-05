@@ -1,7 +1,6 @@
 oo::class create daoTopology {
   method addBridge {bridge} {
     if {[catch {exec sudo ovs-vsctl add-br $bridge} errmsg]} {
-	    puts "$errmsg"
 	    return 0
     }
     return 1
@@ -20,12 +19,33 @@ oo::class create daoTopology {
     }
     return 1
   }
-	
+  
   method addPort {from to} {
     if {[catch {exec sudo ovs-vsctl add-port $from $to} errmsg]} {
+	    puts "error: $from $to $errmsg"
 	    return 0
     }
     return 1
+  }
+	
+  method addPorta {from to} {
+    set rc [catch {
+      set result [exec sudo ovs-vsctl add-port $from $to]
+    } result]
+
+    if {$rc == 0} {
+      puts "error: $rc: $result $from $to $result"
+    } elseif {[string equal $::errorCode NONE]} {
+      puts "warning: $rc: $result"
+    } else {
+      puts "Erorr: $rc: $result"
+    }
+    
+    return $rc
+  }
+  
+  method setOfPort {interface ofPort} {
+    return [exec sudo ovs-vsctl set Interface $interface ofport_request=$ofPort]
   }
 
   method upElement {element} {
@@ -85,5 +105,9 @@ oo::class create daoTopology {
   # ip l | grep loquequeramos
   method existInterface {interface} {
     return [exec scripts/existInterface.sh $interface]
+  }
+  
+  method getOfPort {interface} {
+    return [exec sudo ovs-vsctl get interface $interface ofport]
   }
 }

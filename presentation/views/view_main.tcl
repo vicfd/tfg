@@ -40,26 +40,79 @@
     
     #########################################################################################################
     ###													  ###
-    ###   					Menu bridges						  ### 
+    ###   					Menu archivo						  ### 
+    ###													  ###
+    #########################################################################################################
+
+    set m .menu.files
+    menu $m -tearoff 0 
+    .menu add cascade -label "Archivo" -menu $m -underline 0
+    $m add command -label "Guardar topologia" -command {destroy .panel; windowSaveTopology}
+    $m add command -label "Cargar topologia" -command {destroy .panel; windowLoadTopology}
+    $m add command -label "Guardar control" -command {destroy .panel; windowSaveFlows}
+    $m add command -label "Cargar control" -command {destroy .panel; windowLoadFlows}
+    
+    #########################################################################################################
+    ###													  ###
+    ###   					Menu limpiar						  ### 
+    ###													  ###
+    #########################################################################################################
+
+    set m .menu.clean
+    menu $m -tearoff 0 
+    .menu add cascade -label "Limpiar" -menu $m -underline 0
+    $m add command -label "Limpiar topologia" -command {eventCleanTopology}
+    $m add command -label "Limpiar flujos" -command {destroy .panel; windowCleanFlows}
+
+    #########################################################################################################
+    ###													  ###
+    ###   					Menu puentes						  ### 
     ###													  ###
     #########################################################################################################
 
     set m .menu.bridges
     menu $m -tearoff 0 
-    .menu add cascade -label "Modulo topologia" -menu $m -underline 0 
+    .menu add cascade -label "Puente" -menu $m -underline 0     
     $m add command -label "Agregar puente" -command {destroy .panel; windowAddBridge}
-    $m add command -label "Agregar interfaz" -command {destroy .panel; windowAddInterface}
-    $m add command -label "Agregar puerto" -command {destroy .panel; windowAddPort}
-    $m add command -label "Agregar vLink" -command {destroy .panel; windowAddVlink}
     $m add command -label "Eliminar puente" -command {destroy .panel; windowDelBridge}
-    $m add command -label "Eliminar interfaz" -command {destroy .panel; windowDelInterface}
-    $m add command -label "Eliminar puerto" -command {destroy .panel; windowDelPort}
-    $m add command -label "Eliminar vLink" -command {destroy .panel; windowDelVlink}
     $m add command -label "Mostrar bridges" -command {eventShowInfo}
-    $m add command -label "Guardar topologia" -command {destroy .panel; windowSaveTopology}
-    $m add command -label "Cargar topologia" -command {destroy .panel; windowLoadTopology}
-    $m add command -label "Limpiar topologia" -command {eventCleanTopology}
+    
+    #########################################################################################################
+    ###													  ###
+    ###   					Menu interfaces						  ### 
+    ###													  ###
+    #########################################################################################################
 
+    set m .menu.interfaces
+    menu $m -tearoff 0 
+    .menu add cascade -label "Interfaces" -menu $m -underline 0     
+    $m add command -label "Agregar interfaz" -command {destroy .panel; windowAddInterface}
+    $m add command -label "Eliminar interfaz" -command {destroy .panel; windowDelInterface}
+      
+    #########################################################################################################
+    ###													  ###
+    ###   					Menu vlink						  ### 
+    ###													  ###
+    #########################################################################################################
+
+    set m .menu.vlink
+    menu $m -tearoff 0 
+    .menu add cascade -label "vLink" -menu $m -underline 0 
+    $m add command -label "Agregar vLink" -command {destroy .panel; windowAddVlink}
+    $m add command -label "Eliminar vLink" -command {destroy .panel; windowDelVlink}
+    
+    #########################################################################################################
+    ###													  ###
+    ###   					Menu Puerto						  ### 
+    ###													  ###
+    #########################################################################################################
+
+    set m .menu.port
+    menu $m -tearoff 0 
+    .menu add cascade -label "Puerto" -menu $m -underline 0 
+    $m add command -label "Agregar puerto" -command {destroy .panel; windowAddPort}
+    $m add command -label "Eliminar puerto" -command {destroy .panel; windowDelPort}
+    
     #########################################################################################################
     ###													  ###
     ###   					Menu control						  ### 
@@ -72,9 +125,6 @@
     $m add command -label "Agregar control" -command {destroy .panel; windowAddFlow}
     $m add command -label "Eliminar control" -command {destroy .panel; windowDelFlow}
     $m add command -label "Mostrar flujo" -command {destroy .panel; windowShowFlows}
-    $m add command -label "Guardar control" -command {destroy .panel; windowSaveFlows}
-    $m add command -label "Cargar control" -command {destroy .panel; windowLoadFlows}
-    $m add command -label "Limpiar flujos" -command {destroy .panel; windowCleanFlows}
 
     . configure -menu .menu
     focus .

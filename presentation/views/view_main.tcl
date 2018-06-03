@@ -32,7 +32,7 @@
     ###												          ###
     #########################################################################################################
 
-    wm title . "OpenVSwitch provisional"
+    wm title . "Nuestro controlador Open vSwitch"
     wm minsize . 950 300
     menu .menu -tearoff 0 
     wm geometry .menu 300x50
@@ -75,7 +75,7 @@
     .menu add cascade -label "Puente" -menu $m -underline 0     
     $m add command -label "Agregar puente" -command {destroy .panel; windowAddBridge}
     $m add command -label "Eliminar puente" -command {destroy .panel; windowDelBridge}
-    $m add command -label "Mostrar bridges" -command {eventShowInfo}
+    $m add command -label "Mostrar puentes" -command {eventShowInfo}
     
     #########################################################################################################
     ###													  ###
@@ -134,4 +134,10 @@
     text $notification.txt -width 130 -height 10
     pack $notification.txt
     pack $notification -side bottom 
+    
+    global panel
+    set panel [frame .panel]
+    label $panel.lab1 -text "Bienvenido a nuestro controlador de Open vSwitch, utiliza el menu de arriba para navegar por todas las funciones." -height 5
+    grid $panel.lab1 -row 0 -column 0
+    pack $panel    
   }

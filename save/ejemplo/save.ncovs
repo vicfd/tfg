@@ -1,0 +1,8 @@
+{
+	"topologia":
+	{
+		"veth" : [{"veth1.0": "veth1.1"}],
+		"tuntap" : ["uml1.0", "uml2.0", "uml2.1"],
+		"bridge" : [{"br0" : ["br0.ncovs", {"uml1.0": 1}, {"uml2.0": 2}, {"veth1.0": 3}]}, {"br1" : ["br1.ncovs", {"uml1.1": 1}, {"uml2.1": 2}, {"veth1.1": 3}]}]
+	}
+}

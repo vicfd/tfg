@@ -31,7 +31,7 @@
     label $panel.lab1 -text "Nombre del bridge:" -width 50
     entry $panel.ent -width 50    
     label $panel.lab2 -text "No File"
-    button $panel.but -text "Guardar flujo" -command "eventSaveFlows"
+    button $panel.but -text "Guardar control de flujo" -command "eventSaveFlows"
 
     grid $panel.lab1 -row 0 -column 0
     grid $panel.ent -row 1 -column 0

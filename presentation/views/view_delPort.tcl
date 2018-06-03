@@ -28,7 +28,7 @@
     set panel [frame .panel]
     
     
-    label $panel.lab1 -text "Nombre del bridge:" -width 50
+    label $panel.lab1 -text "Nombre del puente:" -width 50
     entry $panel.ent1 -width 50
     label $panel.lab2 -text "Nombre del elemento a conectar:" -width 50
     entry $panel.ent2 -width 50

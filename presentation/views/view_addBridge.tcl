@@ -27,9 +27,9 @@
     set panel [frame .panel]
     
     
-    label $panel.lab -text "Nombre del bridge:" -width 50
+    label $panel.lab -text "Nombre del puente:" -width 50
     entry $panel.ent -width 50
-    button $panel.but -text "Crear bridge" -command "eventAddBridge"
+    button $panel.but -text "Crear puente" -command "eventAddBridge"
     
     pack $panel.lab
     pack $panel.ent
